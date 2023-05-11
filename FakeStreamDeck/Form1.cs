@@ -39,7 +39,17 @@ namespace FakeStreamDeck
         static void SendKeys(List<Keys> key)
         {
             foreach(Keys k in key)
-            keybd_event((byte)k, 0, KEYEVENTF_KEYDOWN, 0);
+                keybd_event((byte)k, 0, KEYEVENTF_KEYDOWN, 0);
+            foreach (Keys k in key)
+                keybd_event((byte)k, 0, KEYEVENTF_KEYUP, 0);
+        }
+        static void KeysDown(List<Keys> key)
+        {
+            foreach (Keys k in key)
+                keybd_event((byte)k, 0, KEYEVENTF_KEYDOWN, 0);
+        }
+        static void KeysUp(List<Keys> key)
+        {
             foreach (Keys k in key)
                 keybd_event((byte)k, 0, KEYEVENTF_KEYUP, 0);
         }
@@ -55,7 +65,7 @@ namespace FakeStreamDeck
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            label1.Text = "Selected Key: 1";
+            label1.Text = "Selected Key: none";
             if (File.Exists("macros.conf"))
             {
                 using(StreamReader sr = new StreamReader("macros.conf"))
@@ -67,6 +77,18 @@ namespace FakeStreamDeck
                         line.Replace("\n", "");
                         macro[i++] = line;
                     }
+                }
+            }
+            else
+            {
+                using(StreamWriter sw = new StreamWriter("macros.conf"))
+                {
+                    for (int i = 0; i < macro.Length; i++)
+                    {
+                        sw.WriteLine(i + 1);
+                        macro[i] = $"D{i+1}";
+                    }
+                        
                 }
             }
 
@@ -101,12 +123,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if(!IsKeyPushedDown(Keys.F13))
+            else if(!IsKeyPushedDown(Keys.F13) && btn1Held)
             {
                 btn1Held = false;
                 button1.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[0].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
 
             if (IsKeyPushedDown(Keys.F14) && !btn2Held)
@@ -127,12 +164,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F14))
+            else if (!IsKeyPushedDown(Keys.F14) && btn2Held)
             {
                 btn2Held = false;
                 button2.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[1].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
 
             if (IsKeyPushedDown(Keys.F21) && !btn3Held)
@@ -153,12 +205,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F21))
+            else if (!IsKeyPushedDown(Keys.F21) && btn3Held)
             {
                 btn3Held= false;
                 button3.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[2].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
 
             if (IsKeyPushedDown(Keys.F15) && !btn4Held)
@@ -179,12 +246,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F15))
+            else if (!IsKeyPushedDown(Keys.F15) && btn4Held)
             {
                 btn4Held= false;
                 button4.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[3].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
             if (IsKeyPushedDown(Keys.F16) && !btn5Held)
             {
@@ -204,12 +286,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F16))
+            else if (!IsKeyPushedDown(Keys.F16) && btn5Held)
             {
                 btn5Held= false;
                 button5.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[4].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
             if (IsKeyPushedDown(Keys.F20) && !btn6Held)
             {  
@@ -229,12 +326,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F20))
+            else if (!IsKeyPushedDown(Keys.F20) && btn6Held)
             {
                 btn6Held= false;
                 button6.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[5].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
             if (IsKeyPushedDown(Keys.F17) && !btn7Held)
             {
@@ -254,12 +366,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F17))
+            else if (!IsKeyPushedDown(Keys.F17) && btn7Held)
             {
                 btn7Held= false;
                 button7.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[6].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
             if (IsKeyPushedDown(Keys.F18) && !btn8Held)
             {
@@ -279,12 +406,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F18))
+            else if (!IsKeyPushedDown(Keys.F18) && btn8Held)
             {
                 btn8Held= false;
                 button8.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[7].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
             if (IsKeyPushedDown(Keys.F19) && !btn9Held)
             {
@@ -304,12 +446,27 @@ namespace FakeStreamDeck
 
                     }
                 }
-                SendKeys(makaron);
+                KeysDown(makaron);
             }
-            else if (!IsKeyPushedDown(Keys.F19))
+            else if (!IsKeyPushedDown(Keys.F19) && btn9Held)
             {
                 btn9Held= false;
                 button9.BackColor = ColorTranslator.FromHtml("#205295");
+                string[] keys = macro[8].Split(' ');
+                List<Keys> makaron = new List<Keys>();
+                foreach (string sKey in keys)
+                {
+                    try
+                    {
+                        Keys key = (Keys)Enum.Parse(typeof(Keys), sKey.Trim(), true);
+                        makaron.Add(key);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                KeysUp(makaron);
             }
         }
         
@@ -463,6 +620,11 @@ namespace FakeStreamDeck
             Show();
             this.WindowState = FormWindowState.Normal;
             notifyIcon1.Visible = false;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?redirectedfrom=MSDN&view=windowsdesktop-7.0#fields");
         }
     }
 }
