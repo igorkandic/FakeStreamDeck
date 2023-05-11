@@ -1,6 +1,11 @@
 # FakeStreamDeck
 
 New Year present for my friend who wants to stream :D 
+## TODO
+- Hotkey recorder
+- AutoStartup
+- Multiple profiles
+- Better UI
 
 ![image](https://user-images.githubusercontent.com/10564596/210038762-b82ce1fe-16bd-4fb9-9265-66273d345764.png)
 
